@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RecetApp — Lab 10 Shadow DOM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles/main.css" />
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">🍳 RecetApp</span>
+      <nav class="nav">
+        <a href="#">Inicio</a>
+        <a href="#">Recetas</a>
+        <a href="#">Categorías</a>
+        <a href="#">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-tag">Descubrí sabores nuevos</p>
+      <h1 class="hero-title">Recetas para cada momento</h1>
+      <p class="hero-sub">Desde desayunos rápidos hasta cenas especiales, encontrá la receta perfecta para hoy.</p>
+      <a href="#recetas" class="btn-hero">Ver recetas</a>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS
+       El texto va como contenido del elemento (slot por defecto),
+       no como atributo. Esto es la diferencia clave con el Lab 9.
+  -->
+  <div class="section-wrap">
+    <h2 class="section-title">Categorías</h2>
+    <div class="categorias-list">
+      <category-chip>🥗 Ensaladas</category-chip>
+      <category-chip>🍝 Pastas</category-chip>
+      <category-chip>🍖 Carnes</category-chip>
+      <category-chip>🐟 Mariscos</category-chip>
+      <category-chip>🍰 Postres</category-chip>
+      <category-chip>🥤 Bebidas</category-chip>
+    </div>
+  </div>
+
+  <!-- RECETAS
+       El título y descripción van como slots nombrados dentro del componente.
+       Los datos técnicos (time, portions, etc.) siguen como atributos HTML.
+  -->
+  <div class="section-wrap" id="recetas">
+    <h2 class="section-title">Recetas destacadas</h2>
+    <div class="recetas-grid">
+
+      <!-- Tarjeta destacada: el texto va en slots, los datos en atributos -->
+      <recipe-card
+        featured
+        emoji="🍜"
+        tag="Pastas"
+        time="20"
+        portions="2"
+        rating="4.8"
+        gradient="linear-gradient(135deg, #f9a825, #e64a19)"
+      >
+        <h3 slot="title">Pasta al pesto con tomates cherry</h3>
+        <p slot="description">Un clásico italiano rápido y lleno de sabor fresco.</p>
+      </recipe-card>
+
+      <recipe-card
+        emoji="🥗"
+        tag="Ensaladas"
+        time="10"
+        portions="4"
+        rating="4.5"
+        gradient="linear-gradient(135deg, #66bb6a, #1b5e20)"
+      >
+        <h3 slot="title">Ensalada mediterránea</h3>
+        <p slot="description">Fresca, colorida y lista en minutos.</p>
+      </recipe-card>
+
+      <recipe-card
+        emoji="🍖"
+        tag="Carnes"
+        time="40"
+        portions="3"
+        rating="4.9"
+        gradient="linear-gradient(135deg, #ef9a9a, #b71c1c)"
+      >
+        <h3 slot="title">Lomo al chimichurri</h3>
+        <p slot="description">Corte jugoso con salsa argentina tradicional.</p>
+      </recipe-card>
+
+      <recipe-card
+        emoji="🐟"
+        tag="Mariscos"
+        time="30"
+        portions="2"
+        rating="4.7"
+        gradient="linear-gradient(135deg, #80deea, #006064)"
+      >
+        <h3 slot="title">Ceviche de tilapia</h3>
+        <p slot="description">Fresco y cítrico, perfecto para el calor.</p>
+      </recipe-card>
+
+      <recipe-card
+        emoji="🍰"
+        tag="Postres"
+        time="60"
+        portions="8"
+        rating="5.0"
+        gradient="linear-gradient(135deg, #ce93d8, #4a148c)"
+      >
+        <h3 slot="title">Tres leches esponjoso</h3>
+        <p slot="description">El postre favorito de todos, húmedo y suave.</p>
+      </recipe-card>
+
+    </div>
+  </div>
+
+  <!-- RECETA DESTACADA
+       Los datos numéricos siguen como atributos.
+       Todo el texto va como slots nombrados dentro del componente.
+  -->
+  <div class="featured-section-wrap">
+    <featured-recipe
+      emoji="🍲"
+      time="90"
+      portions="6"
+      calories="420"
+      rating="4.9"
+      gradient="linear-gradient(135deg, #ffcc80, #e65100)"
+    >
+      <span slot="tag">Carnes</span>
+
+      <h3 slot="title">Olla de carne costarricense</h3>
+
+      <p slot="description">
+        Un plato tradicional que reúne yuca, plátano, chayote, papa y carne de res
+        en un caldo sabroso. Ideal para el almuerzo familiar del domingo.
+      </p>
+
+      <!--
+        Lista de ingredientes como slot.
+        El CSS interno usa ::slotted([slot="ingredients"])
+        para dar estilo a esta lista desde dentro del Shadow DOM.
+      -->
+      <ul slot="ingredients">
+        <li>500g carne de res</li>
+        <li>2 chayotes</li>
+        <li>1 yuca mediana</li>
+        <li>2 papas</li>
+        <li>1 plátano verde</li>
+        <li>Culantro al gusto</li>
+        <li>Sal y consomé al gusto</li>
+      </ul>
+
+    </featured-recipe>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>© 2026 RecetApp — Hecho con ❤️ y mucho sazón</p>
+  </footer>
+
+</body>
+</html>

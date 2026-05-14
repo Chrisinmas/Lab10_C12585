@@ -1,0 +1,270 @@
+/* =============================================
+   VARIABLES CSS GLOBALES
+   Las variables se filtran a través del Shadow DOM.
+   Todos los componentes las pueden leer con var().
+   ============================================= */
+:root {
+  --color-bg: #fffdf8;
+  --color-surface: #ffffff;
+  --color-primary: #c0392b;
+  --color-primary-dark: #922b21;
+  --color-text: #1a1a1a;
+  --color-text-light: #6b6b6b;
+  --color-border: #e8e0d0;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --card-radius: 1rem;
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --card-shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+
+  --chip-radius: 999px;
+
+  --gap: 1.5rem;
+  --max-width: 1200px;
+}
+
+/* =============================================
+   RESET
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* =============================================
+   HEADER
+   ============================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  box-shadow: var(--card-shadow);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--color-text-light);
+  transition: color 0.2s;
+}
+
+.nav a:hover { color: var(--color-primary); }
+
+/* =============================================
+   HERO
+   ============================================= */
+.hero {
+  min-height: 70vh;
+  background:
+    linear-gradient(160deg, rgba(192,57,43,0.92) 0%, rgba(243,156,18,0.85) 100%),
+    repeating-linear-gradient(45deg, transparent, transparent 10px,
+      rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero-content {
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.hero-tag {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.15);
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  color: white;
+  line-height: 1.1;
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.85);
+  max-width: 520px;
+}
+
+.btn-hero {
+  display: inline-block;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  transition: all 0.25s;
+  box-shadow: var(--card-shadow);
+}
+
+.btn-hero:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   SECCIONES
+   ============================================= */
+.section-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 900;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 50%;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 2px;
+}
+
+/* =============================================
+   CATEGORÍAS
+   ============================================= */
+.categorias-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* =============================================
+   GRID DE RECETAS
+   ============================================= */
+.recetas-grid {
+  --card-min: 280px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr));
+  gap: var(--gap);
+}
+
+recipe-card[featured] {
+  grid-column: span 2;
+}
+
+@media (max-width: 700px) {
+  recipe-card[featured] {
+    grid-column: span 1;
+  }
+}
+
+/* =============================================
+   CSS PARTS — Estilos aplicados desde fuera
+   del Shadow DOM usando ::part()
+
+   Esto es posible porque los componentes exponen
+   sus elementos internos con el atributo part="..."
+   ============================================= */
+
+/* Redondeo cuadrado en la imagen de la card destacada */
+recipe-card[featured]::part(image) {
+  border-radius: 0;
+}
+
+/* El tag del primer card destacado tiene fondo */
+recipe-card[featured]::part(tag) {
+  background: var(--color-primary);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+/* Botón de la receta destacada: se puede cambiar desde aquí */
+featured-recipe::part(button) {
+  background: var(--color-primary);
+  letter-spacing: 0.05em;
+}
+
+featured-recipe::part(button):hover {
+  background: var(--color-primary-dark);
+}
+
+/* El título de la sección destacada */
+featured-recipe::part(section-title) {
+  color: var(--color-text);
+}
+
+/* =============================================
+   FEATURED SECTION WRAPPER
+   ============================================= */
+.featured-section-wrap {
+  max-width: var(--max-width);
+  margin: 0 auto 4rem;
+  padding: 0 2rem;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.site-footer {
+  background: var(--color-text);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 2rem;
+  font-size: 0.9rem;
+}
