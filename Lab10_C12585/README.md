@@ -2,9 +2,9 @@
 
 ## Cómo abrir el proyecto
 
-1. Descomprimí el ZIP y abrí la carpeta en **VS Code**
-2. Instalá la extensión **Live Server** (si no la tenés)
-3. Clic derecho en `src/index.html` → **Open with Live Server**
+Descomprimir el ZIP y abrir la carpeta en VS Code
+Instalar la extensión Live Server (si no está instalada)
+Clic derecho en src/index.html → Open with Live Server
 
 ---
 
